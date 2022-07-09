@@ -2,7 +2,7 @@
 
 # Check the Available memory of a Linux machine
 # Nuno.Dias@gmail.com 2022-07-09
-# Version 0.3
+# Version 0.4
 # License GPLv3
 
 OK=0
@@ -67,7 +67,7 @@ AVAIL=$(free | grep Mem | tr -s " " | cut -d" " -f7)
 
 PER=$(((AVAIL*100)/TOTAL))
 
-echo "Available Memory: ${PER}% ${AVAIL}k"
+echo "OK: Available Memory: ${PER}% (${AVAIL}k)"
 
 if [ "$PER" -le "$CRIT" ]; then
   exit "$CRITICAL"
