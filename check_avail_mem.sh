@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Check the Available memory of a Linux machine
-# Nuno.Dias@gmail.com 2022-07-09 
-# Version 0.2
+# Nuno.Dias@gmail.com 2022-07-09
+# Version 0.3
 # License GPLv3
 
 OK=0
@@ -55,10 +55,10 @@ function options {
 #==============================================================================
 options "$@"
 
-if ! which freex; then
+if ! which free > /dev/null 2>&1; then
 
   echo "Error: free command not found!"
-  exit
+  exit "$UNKNOWN"
 
 fi
 
@@ -67,7 +67,7 @@ AVAIL=$(free | grep Mem | tr -s " " | cut -d" " -f7)
 
 PER=$(((AVAIL*100)/TOTAL))
 
-echo "Available Memory: ${AVAIL}k"
+echo "Available Memory: ${PER}% ${AVAIL}k"
 
 if [ "$PER" -le "$CRIT" ]; then
   exit "$CRITICAL"
