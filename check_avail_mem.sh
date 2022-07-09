@@ -2,7 +2,7 @@
 
 # Check the Available memory of a Linux machine
 # Nuno.Dias@gmail.com 2022-07-09 
-# Version 0.1
+# Version 0.2
 # License GPLv3
 
 OK=0
@@ -15,10 +15,11 @@ CRITICAL=2
 #==============================================================================
 function usage {
 
-  echo "Usage: $0 -w WARN -c CRIT"
+  echo "Usage: $0 -w WARN -c CRIT [-h]"
   echo 
   echo "-w Warning %"
   echo "-c Critical %"
+  echo "-h Help"
   exit
 }
 
@@ -27,11 +28,12 @@ function usage {
 #==============================================================================
 function options {
 
-  while getopts "c:w:" opt; do
+  while getopts "c:w:h" opt; do
 
     case $opt in
       c) CRIT=$OPTARG;;
       w) WARN=$OPTARG;;
+      h) usage;;
       \?) echo "Unknown option: -$OPTARG"
            usage;;
       :) echo "Missing option argument for -$OPTARG"
@@ -52,6 +54,13 @@ function options {
 # The Program
 #==============================================================================
 options "$@"
+
+if ! which freex; then
+
+  echo "Error: free command not found!"
+  exit
+
+fi
 
 TOTAL=$(free | grep Mem | tr -s " " | cut -d" " -f2)
 AVAIL=$(free | grep Mem | tr -s " " | cut -d" " -f7)
