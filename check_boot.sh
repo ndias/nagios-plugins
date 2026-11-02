@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # check_boot, check if a machine crashed
-# Version 0.1 - 2025/01/30 - Nuno.Dias@gmail.com 
+# Version 0.2 - 2026/11/02 - Nuno.Dias@gmail.com 
 
 OK=0
 WARNING=1
@@ -17,7 +17,7 @@ if /usr/bin/systemctl is-active auditd --quiet; then
   SIZE=$(grep -E "max_log_file.=" /etc/audit/auditd.conf | cut -d"=" -f2 | tr -d " ")
   if [ "$SIZE" -lt "$LOGSIZE" ]; then
 
-    MSG="Warning: Log Size $SIZE megas, lower than recommended size $LOGSIZE megas"
+    MSG="Warning (/etc/audit/auditd.conf): max_log_file = $SIZE megas, lower than recommended size $LOGSIZE megas"
     EXIT="$WARNING"
 
   fi
